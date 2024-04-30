@@ -19,6 +19,7 @@ public class PlayerControl : MonoBehaviour
     private bool isGrounded;
     private bool isMove;
     private bool isDie;
+    private bool isGuard;
     private int slash;
 
     public LayerMask groundLayer;
@@ -26,6 +27,10 @@ public class PlayerControl : MonoBehaviour
 
     GameObject respawnPoint;
     GameObject speedRunRespawnPoint;
+
+    GameObject guardEffect;
+    GameObject slashEffect;
+
     public Transform sfx;
 
     void Start()
@@ -33,29 +38,37 @@ public class PlayerControl : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         camera = Camera.main;
+        slash = 0;
 
         isMove = animator.GetBool("isMove");
         isDie = animator.GetBool("isDie");
         slash = animator.GetInteger("slash");
+        isGuard = animator.GetBool("isGuard");
 
+        guardEffect = GameObject.Find("GuardEffect");
+        slashEffect = GameObject.Find("SlashEffect");
         respawnPoint = GameObject.Find("RespawnPoint");
         speedRunRespawnPoint = GameObject.Find("SpeedRunSpawnPoint");
+
+        guardEffect.SetActive(false);
+        slashEffect.SetActive(false);
     }
 
     void Update()
     {
         if (!isDie && !Dialog.instance.dialogRunning && !GameManager.isMenu && !GameManager.isMiniGame)
         {
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
-            Move(h, v);
+            if (!isGuard && slash == 0)
+            {
+                float h = Input.GetAxis("Horizontal");
+                float v = Input.GetAxis("Vertical");
+                Move(h, v);
+            }
 
             Jump();
-            Attack();
-            //Cursor.visible = false;
+            Action();
             if (Input.GetKey(KeyCode.LeftAlt))
             {
-                Debug.Log("알트");
                 Cursor.visible = true;
             }
             else
@@ -116,18 +129,38 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    IEnumerator Slash()
+    private void Action()
     {
-        animator.SetInteger("slash", 1);
-        yield return new WaitForSeconds(0.6f);
-        animator.SetInteger("slash", 0);
-    }
-
-    private void Attack()
-    {
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(Slash());
+        }*/
+
+        // 베기
+        if (Input.GetKey(KeyCode.E)) // 버튼 누르기
+        {
+            animator.SetInteger("slash", 1);
+            slash = 1;
+            slashEffect.SetActive(true);
+        }
+        if (Input.GetKeyUp(KeyCode.E)) // 버튼 떼기
+        {
+            animator.SetInteger("slash", 0);
+            slash = 0;
+            slashEffect.SetActive(false);
+        }
+
+        // 가드
+        if (Input.GetKey(KeyCode.Q)) // 버튼 누르기
+        {
+            animator.SetBool("isGuard", true);
+            isGuard = true;
+            guardEffect.SetActive(true);
+        }
+        if (Input.GetKeyUp(KeyCode.Q)) // 버튼 떼기
+        {
+            animator.SetBool("isGuard", false);
+            isGuard = false;
+            guardEffect.SetActive(false);
         }
     }
 

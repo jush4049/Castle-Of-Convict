@@ -127,13 +127,13 @@ public class GameManager : MonoBehaviour
             case "Defense":
                 Time.timeScale = 1;
 
-                isMiniGame = true;
+                isMiniGame = false;
                 gameUI[2].SetActive(true);
                 mainUI.SetActive(false);
                 cinemachineCamera.SetActive(false);
 
-                mainCamera.position = new Vector3(-117, 24, -201);
-                mainCamera.rotation = Quaternion.Euler(new Vector3(37, 0, 0));
+                mainCamera.position = new Vector3(-100, 30, -140);
+                mainCamera.rotation = Quaternion.Euler(new Vector3(69, 0, 0));
                 player.transform.position = defenseSpawnPoint;
                 break;
         }
