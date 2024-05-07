@@ -27,6 +27,7 @@ public class PlayerControl : MonoBehaviour
 
     GameObject respawnPoint;
     GameObject speedRunRespawnPoint;
+    GameObject defenseRespawnPoint;
 
     GameObject guardEffect;
     GameObject slashEffect;
@@ -49,6 +50,7 @@ public class PlayerControl : MonoBehaviour
         slashEffect = GameObject.Find("SlashEffect");
         respawnPoint = GameObject.Find("RespawnPoint");
         speedRunRespawnPoint = GameObject.Find("SpeedRunSpawnPoint");
+        defenseRespawnPoint = GameObject.Find("DefenseSpawnPoint");
 
         guardEffect.SetActive(false);
         slashEffect.SetActive(false);
@@ -94,19 +96,17 @@ public class PlayerControl : MonoBehaviour
         {
             animator.SetBool("isMove", true);
             animator.SetInteger("slash", 0);
-            // 카메라 방향 확인
-            Vector3 cameraForward = camera.transform.forward;
+
+            Vector3 cameraForward = camera.transform.forward;                                       // 카메라 방향 확인
             Vector3 cameraRight = camera.transform.right;
             cameraForward.y = 0.0f;
             cameraRight.y = 0.0f;
             Vector3 moveDir = (cameraForward.normalized * v) + (cameraRight.normalized * h);
 
-            // 카메라 방향 기준 이동
-            transform.position += moveDir * speed * Time.deltaTime;
+            transform.position += moveDir * speed * Time.deltaTime;                                 // 카메라 방향 기준 이동
             // rb.MovePosition(rb.position + moveDir *speed * Time.fixedDeltaTime);
 
-            //  방향으로 바라보기
-            transform.localRotation = Quaternion.LookRotation(moveDir);
+            transform.localRotation = Quaternion.LookRotation(moveDir);                             //  방향으로 바라보기
         }
         else
         {
@@ -116,7 +116,7 @@ public class PlayerControl : MonoBehaviour
 
     private void Jump()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);  // 바닥 레이어 확인
 
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
@@ -131,12 +131,8 @@ public class PlayerControl : MonoBehaviour
 
     private void Action()
     {
-        /*if (Input.GetMouseButtonDown(0))
-        {
-        }*/
-
         // 베기
-        if (Input.GetKey(KeyCode.E)) // 버튼 누르기
+        if (Input.GetKey(KeyCode.E))   // 버튼 누르기
         {
             animator.SetInteger("slash", 1);
             slash = 1;
@@ -150,7 +146,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         // 가드
-        if (Input.GetKey(KeyCode.Q)) // 버튼 누르기
+        if (Input.GetKey(KeyCode.Q))   // 버튼 누르기
         {
             animator.SetBool("isGuard", true);
             isGuard = true;
@@ -181,15 +177,18 @@ public class PlayerControl : MonoBehaviour
             transform.position = speedRunRespawnPoint.transform.position;
             GaugeBar.time -= 10;
         }
+        if (col.gameObject.tag == "Defense")
+        {
+            transform.position = defenseRespawnPoint.transform.position;
+        }
 
         if (col.gameObject.tag == "Coin")
         {
-            Debug.Log("zhdls");
             SfxSound(0);
         }
     }
 
-    private void Die()
+    public void Die()
     {
         animator.SetBool("isDie", true);
         isDie = true;
@@ -197,7 +196,6 @@ public class PlayerControl : MonoBehaviour
 
     public void Revive()
     {
-        Debug.Log("부활!");
         animator.SetBool("isDie", false);
         isDie = false;
         animator.SetBool("isMove", true);

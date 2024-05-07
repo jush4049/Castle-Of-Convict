@@ -67,6 +67,9 @@ public class ItemManager : MonoBehaviour
             case "SpeedRun":
                 itemSlot[2].item = items[3];
                 break;
+            case "Defense":
+                itemSlot[3].item = items[4];
+                break;
         }
     }
 }

@@ -9,6 +9,10 @@ TagManager:
   - NPC_Lobby
   - SpeedRun
   - Coin
+  - Defense
+  - Base
+  - Guard
+  - Slash
   layers:
   - Default
   - TransparentFX

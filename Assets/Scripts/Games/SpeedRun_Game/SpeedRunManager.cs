@@ -6,7 +6,7 @@ using TMPro;
 
 public class SpeedRunManager : MonoBehaviour
 {
-    GameObject startUI;
+    GameObject startUI;      // 게임 UI
     GameObject gameUI;
     GameObject clearPanel;
     GameObject gauge;
@@ -15,28 +15,25 @@ public class SpeedRunManager : MonoBehaviour
     GameObject startButton;
 
     [SerializeField]
-    List<GameObject> coinList;
+    List<GameObject> coinList;   // 오브젝트(코인) 리스트
     public GameObject _coinList;
-    int coinListCount;
+    int coinMaxCount;            // 리스트의 크기
 
     public TMP_Text timerText;
     public TMP_Text CoinCountText;
 
-    bool isGameOver;
-    bool isGameClear;
-    public static bool isRepair;
-    public static int coinCount;
-    int coinCountMax;
+    bool isGameOver;                // 게임 오버 여부
+    bool isGameClear;               // 게임 클리어 여부
+    public static bool isRepair;    // 맵 복구 여부
+    public static int coinCount;    // 코인 카운트
 
     void Awake()
     {
-        coinListCount = _coinList.transform.childCount;
-        for (int i = 0; i < coinListCount; i++)
+        coinMaxCount = _coinList.transform.childCount;
+        for (int i = 0; i < coinMaxCount; i++)
         {
             coinList.Add(_coinList.transform.GetChild(i).gameObject);
         }
-        coinCountMax = coinListCount;
-        Debug.Log("코인" + coinCountMax);
 
         isGameOver = false;
         isGameClear = false;
@@ -64,13 +61,13 @@ public class SpeedRunManager : MonoBehaviour
     {
         CoinCheck();
 
-        if (GaugeBar.time < 0 && !isGameOver)
+        if (GaugeBar.time < 0 && !isGameOver)           // 클리어 실패 조건
         {
             isGameOver = true;
             Invoke("GameOver", 5.0f);
         }
 
-        if (!isGameClear && coinCount == coinListCount)
+        if (!isGameClear && coinCount == coinMaxCount)  // 클리어 성공 조건
         {
             GameManager.isMiniGame = true;
             GameClear();
@@ -82,10 +79,9 @@ public class SpeedRunManager : MonoBehaviour
     public void GameStop(int value)
     {
         Time.timeScale = value;
-        Debug.Log("멈춰");
     }
-    // 초기화
-    public void SpeedRunInit()
+
+    public void SpeedRunInit()                          // 게임 세팅 초기화
     {
         GaugeBar.time = 10;
         coinCount = 0;
@@ -94,23 +90,23 @@ public class SpeedRunManager : MonoBehaviour
         isGameOver = false;
     }
 
-    public void SpeedRunStart()
+    public void SpeedRunStart()                          // 게임 시작
     {
         SpeedRunInit();
         StartCoroutine(Timer());
-        for (int i = 0; i < coinListCount; i++)
+        for (int i = 0; i < coinMaxCount; i++)
         {
             coinList[i].SetActive(true);
         }
         clearPanel.SetActive(false);
     }
 
-    public void SpeedRunExit()
+    public void SpeedRunExit()                           // 게임 퇴장
     {
         SpeedRunInit();
         isGameClear = false;
         //startButton.SetActive(true);
-        for (int i = 0; i < coinListCount; i++)
+        for (int i = 0; i < coinMaxCount; i++)
         {
             coinList[i].SetActive(true);
         }
@@ -123,8 +119,7 @@ public class SpeedRunManager : MonoBehaviour
         restartPanel.SetActive(false);
         GameManager.isMiniGame = true;
         timer.SetActive(true);
-        // 타이머 스크립트
-        timerText.color = Color.white;
+        timerText.color = Color.white;                    // 타이머 스크립트
         timerText.text = "3";
         yield return new WaitForSecondsRealtime(1.0f);
         timerText.text = "2";
@@ -154,6 +149,6 @@ public class SpeedRunManager : MonoBehaviour
 
     private void CoinCheck()
     {
-        CoinCountText.text = "현재 코인 획득 수 : " + coinCount.ToString() + " / " + coinCountMax.ToString();
+        CoinCountText.text = "현재 코인 획득 수 : " + coinCount.ToString() + " / " + coinMaxCount.ToString();
     }
 }

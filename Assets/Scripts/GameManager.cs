@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     Vector3 speedRunSpawnPoint;         // 미니게임 맵 스폰 포인트
     Vector3 speedRunExitPoint;
     Vector3 defenseSpawnPoint;
+    Vector3 defenseExitPoint;
 
     // Game State
     enum STATE { play, wait, respawn, clear, complete, gameOver};
@@ -53,6 +54,8 @@ public class GameManager : MonoBehaviour
         speedRunSpawnPoint = GameObject.Find("SpeedRunSpawnPoint").transform.position;
         speedRunExitPoint = GameObject.Find("SpeedRunExitPoint").transform.position;
         defenseSpawnPoint = GameObject.Find("DefenseSpawnPoint").transform.position;
+        defenseExitPoint = GameObject.Find("DefenseExitPoint").transform.position;
+
         player = GameObject.Find("Player");
         player.transform.position = spawnPoint;
         isKey = false;
@@ -127,13 +130,13 @@ public class GameManager : MonoBehaviour
             case "Defense":
                 Time.timeScale = 1;
 
-                isMiniGame = false;
+                isMiniGame = true;
                 gameUI[2].SetActive(true);
                 mainUI.SetActive(false);
                 cinemachineCamera.SetActive(false);
 
-                mainCamera.position = new Vector3(-100, 30, -140);
-                mainCamera.rotation = Quaternion.Euler(new Vector3(69, 0, 0));
+                mainCamera.position = new Vector3(-92, 8, -120);
+                mainCamera.rotation = Quaternion.Euler(new Vector3(52, 0, 0));
                 player.transform.position = defenseSpawnPoint;
                 break;
         }
@@ -154,6 +157,13 @@ public class GameManager : MonoBehaviour
                 gameUI[1].SetActive(false);
                 mainUI.SetActive(true);
                 player.transform.position = speedRunExitPoint;
+                break;
+            case "Defense":
+                isMiniGame = false;
+                gameUI[2].SetActive(false);
+                mainUI.SetActive(true);
+                player.transform.position = defenseExitPoint;
+                cinemachineCamera.SetActive(true);
                 break;
         }
     }
