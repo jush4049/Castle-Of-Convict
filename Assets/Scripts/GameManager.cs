@@ -13,16 +13,13 @@ public class GameManager : MonoBehaviour
     Vector3 defenseSpawnPoint;
     Vector3 defenseExitPoint;
 
-    // Game State
-    enum STATE { play, wait, respawn, clear, complete, gameOver};
-    STATE state;
-
     GameObject menuPanel;
     GameObject guidePanel;
     GameObject inventoryPanel;
 
     public TMP_Text missionContentText;
 
+    bool isInfo;                         // 텍스트 수정 여부
     public static bool isMenu;           // 메뉴 UI 생성 여부
     public static bool isKey;            // 아이템 획득 여부
     public static bool isMiniGame;       // 미니게임 실행 여부
@@ -38,6 +35,7 @@ public class GameManager : MonoBehaviour
         StartGame();
         isMenu = false;
         isMiniGame = false;
+        isInfo = false;
 
         menuPanel = GameObject.Find("MenuPanel");
         guidePanel = GameObject.Find("GuidePanel");
@@ -59,7 +57,6 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("Player");
         player.transform.position = spawnPoint;
         isKey = false;
-        // state = STATE.play;
 
     }
 
@@ -67,27 +64,22 @@ public class GameManager : MonoBehaviour
     {
         if (!Dialogue.instance.dialogue_read(0))
         {
-            missionContentText.text = "앞으로 이동하여 의문의 사람에게 말을 건다";
+            isInfo = true;
+            if (isInfo)
+            {
+                missionContentText.text = "앞으로 이동하여 의문의 사람에게 말을 건다";
+            }
+            isInfo = false;
         }
 
         if (!Dialogue.instance.dialogue_read(1))
         {
-            missionContentText.text = "오른쪽 문으로 이동하여 도전을 시작한다.";
-        }
-
-        switch (state)
-        {
-            case STATE.play:
-                break;
-            case STATE.respawn:
-                // 플레이어 리스폰
-                break;
-            case STATE.clear:
-                // 스테이지 클리어
-                break;
-            case STATE.gameOver:
-                // 게임 종료
-                break;
+            isInfo = true;
+            if (isInfo)
+            {
+                missionContentText.text = "오른쪽 문으로 이동하여 도전을 시작한다.";
+            }
+            isInfo = false;
         }
     }
 
