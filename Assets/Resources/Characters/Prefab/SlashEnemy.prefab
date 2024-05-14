@@ -1618,7 +1618,7 @@ GameObject:
   - component: {fileID: 3464030309147777724}
   - component: {fileID: 7445891028188989185}
   - component: {fileID: 1074016553894535751}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SlashEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

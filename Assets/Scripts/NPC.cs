@@ -14,7 +14,7 @@ public class NPC : MonoBehaviour
 
     void Update()
     {
-        if (Dialog.instance.dialogRunning)
+        if (Dialogue.instance.dialogueRunning)
         {
             talkDialog.SetActive(false);
         }

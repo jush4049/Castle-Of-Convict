@@ -58,7 +58,7 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-        if (!isDie && !Dialog.instance.dialogRunning && !GameManager.isMenu && !GameManager.isMiniGame)
+        if (!isDie && !Dialogue.instance.dialogueRunning && !GameManager.isMenu && !GameManager.isMiniGame)
         {
             if (!isGuard && slash == 0)
             {
@@ -77,6 +77,11 @@ public class PlayerControl : MonoBehaviour
             {
                 Cursor.visible = false;
             }
+        }
+
+        if (Dialogue.instance.dialogueRunning)
+        {
+            animator.SetBool("isMove", false);
         }
 
         if (GaugeBar.time < 0)

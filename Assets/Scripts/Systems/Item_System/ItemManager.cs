@@ -49,7 +49,7 @@ public class ItemManager : MonoBehaviour
 
     void Update()
     {
-        if (!Dialog.instance.dialogRunning && Dialog.instance.dialog_cycles[1].check_cycle_read && !GameManager.isKey)
+        if (!Dialogue.instance.dialogueRunning && Dialogue.instance.dialogue_cycles[1].check_cycle_read && !GameManager.isKey)
         {
             Debug.Log("아이템 지급");
             itemSlot[0].item = items[1];

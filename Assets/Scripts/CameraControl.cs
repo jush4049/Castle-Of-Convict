@@ -31,12 +31,12 @@ public class CameraControl : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!Dialog.instance.dialogRunning && !GameManager.isMiniGame)
+        if (!Dialogue.instance.dialogueRunning && !GameManager.isMiniGame)
         {
             freeLookComp.m_XAxis.m_MaxSpeed = xSpeed;
             freeLookComp.m_YAxis.m_MaxSpeed = ySpeed;
         }
-        else if (Dialog.instance.dialogRunning || GameManager.isMiniGame)
+        else if (Dialogue.instance.dialogueRunning || GameManager.isMiniGame)
         {
             if (Input.GetMouseButton(1))
             {

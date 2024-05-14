@@ -17,7 +17,7 @@ public class Tutorial : MonoBehaviour
 
     void Awake()
     {
-        maxPage = pageList.Length - 1;
+        maxPage = pageList.Length - 1;  // 최대 페이지 수 설정
         PageChange();
     }
     public void PrevPage()

@@ -65,12 +65,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (!Dialog.instance.dialog_read(0))
+        if (!Dialogue.instance.dialogue_read(0))
         {
             missionContentText.text = "앞으로 이동하여 의문의 사람에게 말을 건다";
         }
 
-        if (!Dialog.instance.dialog_read(1))
+        if (!Dialogue.instance.dialogue_read(1))
         {
             missionContentText.text = "오른쪽 문으로 이동하여 도전을 시작한다.";
         }

@@ -30,7 +30,7 @@ public class PopUPManager : MonoBehaviour
 
     private void Update()
     {
-        if (!Dialog.instance.dialogRunning)
+        if (!Dialogue.instance.dialogueRunning)
         {
             if (activePopupLinkedList.Count > 0)
             {

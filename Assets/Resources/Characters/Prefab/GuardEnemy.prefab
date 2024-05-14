@@ -808,7 +808,7 @@ GameObject:
   - component: {fileID: 716539609479107024}
   - component: {fileID: 6067567589478548043}
   - component: {fileID: 4735539922793774286}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GuardEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -916,7 +916,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: Guard
-  defenseManager: {fileID: 2547819997803738152, guid: df54c2474b6710e4fa0944fc011f0140, type: 3}
 --- !u!1 &5589103169519866885
 GameObject:
   m_ObjectHideFlags: 0
