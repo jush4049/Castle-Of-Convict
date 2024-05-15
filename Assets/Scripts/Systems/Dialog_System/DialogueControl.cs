@@ -46,6 +46,22 @@ public class DialogueControl : MonoBehaviour
                     StartCoroutine(dialogue_co);
                 }
                 break;
+            case "SpeedRun":
+                currentIndex = 3;
+                if (Dialogue.instance.dialogue_read(currentIndex) && !Dialogue.instance.dialogueRunning)
+                {
+                    IEnumerator dialogue_co = Dialogue.instance.dialogue_system_start(currentIndex);
+                    StartCoroutine(dialogue_co);
+                }
+                break;
+            case "Defense":
+                currentIndex = 4;
+                if (Dialogue.instance.dialogue_read(currentIndex) && !Dialogue.instance.dialogueRunning)
+                {
+                    IEnumerator dialogue_co = Dialogue.instance.dialogue_system_start(currentIndex);
+                    StartCoroutine(dialogue_co);
+                }
+                break;
         }
     }
 
