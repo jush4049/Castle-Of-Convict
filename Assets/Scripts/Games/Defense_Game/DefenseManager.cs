@@ -11,18 +11,19 @@ public class DefenseManager : MonoBehaviour
     GameObject restartPanel;
 
     public static bool isDefenseGame;        // 게임 실행 여부
+    public static float enemySpeed;                 // 적군 속도 값
     private float timerMax = 60;
     private int heartMax = 3;
     private int EnemyMax;
 
-    int heart;                                  // 기지 HP
+    int heart;                               // 기지 HP
     float timerNum;                          // 타이머
     float respawnTime;                       // 리스폰 초기화 시간
     public GameObject[] enemyList;           // 적군
     public Transform[] enemyRespawnPoint;    // 적군 리스폰 포인트
     public GameObject[] heartImage;          // 하트 이미지(hp)
     public TMP_Text timerText;               // 타이머 UI
-    public TMP_Text infoText;               // 타이머 UI
+    public TMP_Text infoText;                // 타이머 UI
 
     GameObject enemyParent;
 
@@ -42,6 +43,7 @@ public class DefenseManager : MonoBehaviour
         respawnTime = 3.0f;
         infoText.text = "";
 
+        enemySpeed = 2.0f;
         DefenseInit();
     }
 
@@ -110,16 +112,19 @@ public class DefenseManager : MonoBehaviour
             if (timerNum < 30 && timerNum > 27)                     // 타이머 시간이 일정 시간 이하면 리스폰 코루틴 변경 (적군 리스폰 속도 증가)
             {
                 respawnTime = 1.0f;
+                enemySpeed = 4.0f;
                 infoText.text = "적이 몰려드는 속도가 빨라집니다!";
             }
             else if (timerNum < 30)
             {
                 respawnTime = 1.0f;
+                enemySpeed = 4.0f;
                 infoText.text = "";
             }
             else
             {
                 respawnTime = 3.0f;
+                enemySpeed = 2.0f;
                 infoText.text = "";
             }
         }

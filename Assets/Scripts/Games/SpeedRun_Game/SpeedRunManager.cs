@@ -88,6 +88,7 @@ public class SpeedRunManager : MonoBehaviour
         restartPanel.SetActive(false);
         gauge.SetActive(false);
         isGameOver = false;
+        startButton.SetActive(true);
     }
 
     public void SpeedRunStart()                          // 게임 시작
@@ -105,7 +106,6 @@ public class SpeedRunManager : MonoBehaviour
     {
         SpeedRunInit();
         isGameClear = false;
-        //startButton.SetActive(true);
         for (int i = 0; i < coinMaxCount; i++)
         {
             coinList[i].SetActive(true);

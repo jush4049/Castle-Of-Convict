@@ -7,7 +7,7 @@ namespace DefenseGame
     public class Enemy : MonoBehaviour
     {
         public string value; // 공격 오브젝트 콜라이더 태그 값
-        float speed;         // 적군 속도
+        bool isDie;
 
         private Animator animator;
         GameObject defenseManager;
@@ -16,16 +16,15 @@ namespace DefenseGame
         {
             defenseManager = GameObject.Find("DefenseManager");
             animator = GetComponent<Animator>();
-        }
-
-        void Start ()
-        {
-            speed = 2.0f;
+            isDie = false;
         }
 
         void Update()
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            if (!isDie)
+            {
+                transform.Translate(Vector3.forward * Time.deltaTime * DefenseManager.enemySpeed);
+            }
         }
 
         private void OnTriggerEnter(Collider col)
@@ -39,7 +38,7 @@ namespace DefenseGame
             if (col.gameObject.tag == value) // 값에 따라 통하는 공격이 다름
             {
                 Invoke("Die", 3f);
-                speed = 0;
+                isDie = true;
                 animator.SetBool("isEnemyDie", true);
             }
         }
