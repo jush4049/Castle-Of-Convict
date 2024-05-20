@@ -47,6 +47,7 @@ public class Dialogue : MonoBehaviour
 
     public GameObject mainUI;
     public GameObject nextImage;
+    public GameObject backgroundImage;
 
     public bool isAnswer = false;
 
@@ -66,7 +67,7 @@ public class Dialogue : MonoBehaviour
 
         mainUI.SetActive(false);
         nextImage.SetActive(false);
-
+        backgroundImage.SetActive(false);
         readIndex = 1;
     }
     
@@ -79,9 +80,9 @@ public class Dialogue : MonoBehaviour
     public void skip(int index)
     {
         index = DialogueControl.currentIndex;
-        Debug.Log("현재 다이얼로그index : " + index);
-        Debug.Log("readIndex : " + readIndex);
-        Debug.Log(dialogue_cycles[index].info.Count);
+        // Debug.Log("현재 다이얼로그index : " + index);
+        // Debug.Log("readIndex : " + readIndex);
+        // Debug.Log(dialogue_cycles[index].info.Count);
         StopAllCoroutines();                                // 모든 코루틴 비활성화
         dialogueCanvas.SetActive(false);                      // 다이얼로그 UI 비활성화
         dialogue_cycles[index].check_cycle_read = true;       // 현재 다이얼로그 읽음 처리
@@ -111,8 +112,8 @@ public class Dialogue : MonoBehaviour
         mainUI.SetActive(false);
         foreach (Dialogue_info dialogue_temp in dialogue_cycles[index].info)  // 대화 단위를 큐로 관리하기 위해 넣는다.
         {
-            Debug.Log("표시할 다이얼로그 순서" + index);
-            Debug.Log(dialogue_temp.content);
+            // Debug.Log("표시할 다이얼로그 순서" + index);
+            // Debug.Log(dialogue_temp.content);
             text_seq.Enqueue(dialogue_temp.content);                      // Enqueue > 큐에 데이터 추가
         }
 
@@ -252,5 +253,13 @@ public class Dialogue : MonoBehaviour
                 break;
         }
     }
-
+    public void Reacts(string value)
+    {
+        switch (value)
+        {
+            case "Black_In":
+                backgroundImage.SetActive(true);
+                break;
+        }
+    }
 }

@@ -55,7 +55,7 @@ public class DefenseManager : MonoBehaviour
             timerText.text = string.Format("{0:N2}", timerNum); // 소수점 두 번째 자리까지 표시
         }
 
-        Debug.Log(heart);
+        // Debug.Log(heart);
 
         if (heart <= 0 && isDefenseGame)                  // 게임 패배
         {

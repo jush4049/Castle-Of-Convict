@@ -11,6 +11,8 @@ public class ItemManager : MonoBehaviour
     [SerializeField]
     private ItemSlot[] itemSlot;
 
+    public static bool isGameClear = false;
+
 #if UNITY_EDITOR
     private void OnValidate() {
         itemSlot = slotParent.GetComponentsInChildren<ItemSlot>();
@@ -54,6 +56,12 @@ public class ItemManager : MonoBehaviour
             Debug.Log("아이템 지급");
             itemSlot[0].item = items[1];
             GameManager.isKey = true;
+        }
+
+        if (itemSlot[1].item == items[2] && itemSlot[2].item == items[3] && itemSlot[3].item == items[4]) // 모든 미니게임 클리어
+        {
+            Debug.Log("게임 클리어");
+            isGameClear = true;
         }
     }
 

@@ -2,12 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 public class DialogueControl : MonoBehaviour
 {
     public static int currentIndex;       // 현재 출력하는 대화의 인덱스
-    public string scriptName;      // 대화창 이름
+    public string scriptName;             // 대화창 이름
     public TMP_Text infoText;
+
+    GameObject dialogueManager;
+
+    void Awake()
+    {
+        dialogueManager = GameObject.Find("DialogueManager");
+    }
 
     void Update()
     {
@@ -23,6 +30,11 @@ public class DialogueControl : MonoBehaviour
                 StartCoroutine(Info());
             }
         }
+        if (Dialogue.instance.dialogue_cycles[5].check_cycle_read) // 게임 클리어
+        {
+            SceneManager.LoadScene("ClearScene");
+        }
+        Debug.Log(currentIndex);
     }
 
     // 스크립트 출력 시작
@@ -62,12 +74,22 @@ public class DialogueControl : MonoBehaviour
                     StartCoroutine(dialogue_co);
                 }
                 break;
+            case "End":
+                if (ItemManager.isGameClear)
+                currentIndex = 5;
+                if (Dialogue.instance.dialogue_read(currentIndex) && !Dialogue.instance.dialogueRunning)
+                {
+                    IEnumerator dialogue_co = Dialogue.instance.dialogue_system_start(currentIndex);
+                    StartCoroutine(dialogue_co);
+                    dialogueManager.SendMessage("Reacts", "Black_In");
+                }
+                break;
         }
     }
 
     IEnumerator Info()
     {
-        infoText.text = "<color=red>지금은 대화할수 없다</color>";
+        infoText.text = "<color=red>지금은 대화할 수 없다</color>";
         yield return new WaitForSeconds(1.0f);
         infoText.text = "";
     }
