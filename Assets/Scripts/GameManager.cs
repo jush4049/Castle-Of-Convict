@@ -18,11 +18,13 @@ public class GameManager : MonoBehaviour
     GameObject inventoryPanel;
 
     public TMP_Text missionContentText;
+    public TMP_Text delivererText;
 
     bool isInfo;                         // 텍스트 수정 여부
     public static bool isMenu;           // 메뉴 UI 생성 여부
     public static bool isKey;            // 아이템 획득 여부
     public static bool isMiniGame;       // 미니게임 실행 여부
+    public static bool isGameClear;      // 모든 미니게임 클리어 여부
 
     public Transform mainCamera;
     public GameObject cinemachineCamera;
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
         isMenu = false;
         isMiniGame = false;
         isInfo = false;
+        isGameClear = false;
 
         menuPanel = GameObject.Find("MenuPanel");
         guidePanel = GameObject.Find("GuidePanel");
@@ -78,6 +81,17 @@ public class GameManager : MonoBehaviour
             if (isInfo)
             {
                 missionContentText.text = "오른쪽 문으로 이동하여 도전을 시작한다.";
+                delivererText.text = "인도자";
+            }
+            isInfo = false;
+        }
+
+        if (GameManager.isGameClear)
+        {
+            isInfo = true;
+            if (isInfo)
+            {
+                missionContentText.text = "빛나는 문으로 이동하여 탈출한다.";
             }
             isInfo = false;
         }

@@ -75,7 +75,7 @@ public class DialogueControl : MonoBehaviour
                 }
                 break;
             case "End":
-                if (ItemManager.isGameClear)
+                if (GameManager.isGameClear)
                 currentIndex = 5;
                 if (Dialogue.instance.dialogue_read(currentIndex) && !Dialogue.instance.dialogueRunning)
                 {
