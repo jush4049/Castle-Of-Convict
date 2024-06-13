@@ -22,6 +22,7 @@ public class PlayerControl : MonoBehaviour
     private bool isGuard;
     private int slash;
 
+
     public LayerMask groundLayer;
     private float groundCheckDistance = 0.1f;
 
@@ -32,7 +33,7 @@ public class PlayerControl : MonoBehaviour
     GameObject guardEffect;
     GameObject slashEffect;
 
-    public Transform sfx;
+    public Transform[] audios;
 
     void Start()
     {
@@ -112,10 +113,20 @@ public class PlayerControl : MonoBehaviour
             // rb.MovePosition(rb.position + moveDir *speed * Time.fixedDeltaTime);
 
             transform.localRotation = Quaternion.LookRotation(moveDir);                             //  방향으로 바라보기
+            if (isGrounded)
+            {
+                SfxLoopPlay(0);
+            }
+            else
+            {
+                SfxLoopStop(0);
+            }
+
         }
         else
         {
             animator.SetBool("isMove", false);
+            SfxLoopStop(0);
         }
     }
 
@@ -127,6 +138,7 @@ public class PlayerControl : MonoBehaviour
         {
             animator.SetBool("isJump", true);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            SfxPlay(3);
         }
         else
         {
@@ -139,9 +151,11 @@ public class PlayerControl : MonoBehaviour
         // 베기
         if (Input.GetKey(KeyCode.E))   // 버튼 누르기
         {
+            SfxLoopStop(0);
             animator.SetInteger("slash", 1);
             slash = 1;
             slashEffect.SetActive(true);
+            SfxPlay(1);
         }
         if (Input.GetKeyUp(KeyCode.E)) // 버튼 떼기
         {
@@ -153,9 +167,11 @@ public class PlayerControl : MonoBehaviour
         // 가드
         if (Input.GetKey(KeyCode.Q))   // 버튼 누르기
         {
+            SfxLoopStop(0);
             animator.SetBool("isGuard", true);
             isGuard = true;
             guardEffect.SetActive(true);
+            SfxPlay(2);
         }
         if (Input.GetKeyUp(KeyCode.Q)) // 버튼 떼기
         {
@@ -163,11 +179,6 @@ public class PlayerControl : MonoBehaviour
             isGuard = false;
             guardEffect.SetActive(false);
         }
-    }
-
-    void SfxSound(int kind)
-    {
-        sfx.SendMessage("PlaySound", kind);
     }
 
     private void OnTriggerEnter(Collider col)
@@ -187,9 +198,9 @@ public class PlayerControl : MonoBehaviour
             transform.position = defenseRespawnPoint.transform.position;
         }
 
-        if (col.gameObject.tag == "Coin")
+        if (col.gameObject.tag == "Main")
         {
-            SfxSound(0);
+            BgmPlay(0);
         }
     }
 
@@ -205,4 +216,26 @@ public class PlayerControl : MonoBehaviour
         isDie = false;
         animator.SetBool("isMove", true);
     }
+
+    #region "AudioManage -----------"
+    void BgmPlay(int kind)
+    {
+        audios[0].SendMessage("AudioPlay", kind);
+    }
+
+    void SfxPlay(int kind)
+    {
+        audios[1].SendMessage("AudioPlay", kind);
+    }
+
+    void SfxLoopPlay(int kind)
+    {
+        audios[2].SendMessage("AudioPlay", kind);
+    }
+
+    void SfxLoopStop(int kind)
+    {
+        audios[2].SendMessage("AudioStop", kind);
+    }
+    #endregion
 }
