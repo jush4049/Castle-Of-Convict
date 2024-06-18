@@ -9,6 +9,7 @@ public class DefenseManager : MonoBehaviour
     GameObject gameUI;
     GameObject clearPanel;
     GameObject restartPanel;
+    GameObject startButton;
 
     public static bool isDefenseGame;        // 게임 실행 여부
     public static float enemySpeed;                 // 적군 속도 값
@@ -34,6 +35,7 @@ public class DefenseManager : MonoBehaviour
         gameUI = GameObject.Find("DefenseGameUI");
         clearPanel = GameObject.Find("DefenseGameClearPanel");
         restartPanel = GameObject.Find("DefenseGameRestartPanel");
+        startButton = GameObject.Find("DefenseGameStartButton");
 
         startUI.SetActive(false);
         gameUI.SetActive(false);
@@ -84,6 +86,7 @@ public class DefenseManager : MonoBehaviour
         {
             heartImage[i].SetActive(true);
         }
+        startButton.SetActive(true);
     }
 
     public void DefenseStart()

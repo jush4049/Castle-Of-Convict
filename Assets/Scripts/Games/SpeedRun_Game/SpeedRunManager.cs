@@ -119,7 +119,7 @@ public class SpeedRunManager : MonoBehaviour
         restartPanel.SetActive(false);
         GameManager.isMiniGame = true;
         timer.SetActive(true);
-        timerText.color = Color.white;                    // 타이머 스크립트
+        timerText.color = Color.red;                    // 타이머 스크립트
         timerText.text = "3";
         yield return new WaitForSecondsRealtime(1.0f);
         timerText.text = "2";

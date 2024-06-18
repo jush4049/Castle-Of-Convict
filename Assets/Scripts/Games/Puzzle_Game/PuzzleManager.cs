@@ -132,7 +132,7 @@ public class PuzzleManager : MonoBehaviour
 
     void MakeSingleTile(int idx, Vector2 size)
     {
-        GameObject tile = Instantiate(Resources.Load("Tile")) as GameObject;
+        GameObject tile = Instantiate(Resources.Load("Prefabs/Tile")) as GameObject;
         tile.transform.localScale = new Vector3(tileScale, tileScale, 1);    // 타일의 스케일 설정
 
         // 타일에 분할한 Sprite 입히기

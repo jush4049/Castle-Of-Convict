@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     public GameObject mainUI;
     public GameObject[] gameUI;
 
+    public Transform bgm; // 미니게임 BGM
+
     void Awake()
     {
         StartGame();
@@ -122,6 +124,7 @@ public class GameManager : MonoBehaviour
 
                 mainCamera.position = new Vector3(20, -850, -20);
                 mainCamera.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                bgm.SendMessage("BGMPlay", 2); // 미니게임 BGM
                 break;
             case "SpeedRun":
                 Time.timeScale = 1;
@@ -132,6 +135,7 @@ public class GameManager : MonoBehaviour
 
                 //mainCamera.position = new Vector3(470, 7, 17);
                 player.transform.position = speedRunSpawnPoint;
+                bgm.SendMessage("BGMPlay", 3); // 미니게임 BGM
                 break;
             case "Defense":
                 Time.timeScale = 1;
@@ -144,6 +148,7 @@ public class GameManager : MonoBehaviour
                 mainCamera.position = new Vector3(-92, 8, -120);
                 mainCamera.rotation = Quaternion.Euler(new Vector3(52, 0, 0));
                 player.transform.position = defenseSpawnPoint;
+                bgm.SendMessage("BGMPlay", 4); // 미니게임 BGM
                 break;
         }
     }
@@ -157,12 +162,14 @@ public class GameManager : MonoBehaviour
                 gameUI[0].SetActive(false);
                 mainUI.SetActive(true);
                 cinemachineCamera.SetActive(true);
+                bgm.SendMessage("BGMPlay", 1); // 미니게임 BGM
                 break;
             case "SpeedRun":
                 isMiniGame = false;
                 gameUI[1].SetActive(false);
                 mainUI.SetActive(true);
                 player.transform.position = speedRunExitPoint;
+                bgm.SendMessage("BGMPlay", 1); // 미니게임 BGM
                 break;
             case "Defense":
                 isMiniGame = false;
@@ -170,6 +177,7 @@ public class GameManager : MonoBehaviour
                 mainUI.SetActive(true);
                 player.transform.position = defenseExitPoint;
                 cinemachineCamera.SetActive(true);
+                bgm.SendMessage("BGMPlay", 1); // 미니게임 BGM
                 break;
         }
     }

@@ -33,7 +33,8 @@ public class PlayerControl : MonoBehaviour
     GameObject guardEffect;
     GameObject slashEffect;
 
-    public Transform[] audios;
+    public Transform[] audioList;
+    int playerMapPosition;
 
     void Start()
     {
@@ -80,8 +81,9 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        if (Dialogue.instance.dialogueRunning)
+        if (Dialogue.instance.dialogueRunning || GameManager.isMiniGame)
         {
+            FootStepStop(0);
             animator.SetBool("isMove", false);
         }
 
@@ -89,11 +91,6 @@ public class PlayerControl : MonoBehaviour
         {
             Die();
         }
-    }
-
-    void FixedUpdate()
-    {
-
     }
 
     private void Move(float h, float v)
@@ -115,18 +112,18 @@ public class PlayerControl : MonoBehaviour
             transform.localRotation = Quaternion.LookRotation(moveDir);                             //  방향으로 바라보기
             if (isGrounded)
             {
-                SfxLoopPlay(0);
+                FootStepPlay(0);
             }
             else
             {
-                SfxLoopStop(0);
+                FootStepStop(0);
             }
 
         }
         else
         {
             animator.SetBool("isMove", false);
-            SfxLoopStop(0);
+            FootStepStop(0);
         }
     }
 
@@ -151,7 +148,7 @@ public class PlayerControl : MonoBehaviour
         // 베기
         if (Input.GetKey(KeyCode.E))   // 버튼 누르기
         {
-            SfxLoopStop(0);
+            FootStepStop(0);
             animator.SetInteger("slash", 1);
             slash = 1;
             slashEffect.SetActive(true);
@@ -167,7 +164,7 @@ public class PlayerControl : MonoBehaviour
         // 가드
         if (Input.GetKey(KeyCode.Q))   // 버튼 누르기
         {
-            SfxLoopStop(0);
+            FootStepStop(0);
             animator.SetBool("isGuard", true);
             isGuard = true;
             guardEffect.SetActive(true);
@@ -183,10 +180,13 @@ public class PlayerControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
+        // 낙사
         if (col.gameObject.tag == "Fall")
         {
             transform.position = respawnPoint.transform.position;
         }
+
+        // 미니게임 시작
         if (col.gameObject.tag == "SpeedRun")
         {
             SpeedRunManager.isRepair = true;
@@ -198,10 +198,33 @@ public class PlayerControl : MonoBehaviour
             transform.position = defenseRespawnPoint.transform.position;
         }
 
-        if (col.gameObject.tag == "Main")
+        // 오브젝트 획득
+        if (col.gameObject.tag == "Coin")
+        {
+            SfxPlay(0);
+        }
+
+        // 배경음악 변경
+        if (col.gameObject.tag == "MainHall_BGM")
         {
             BgmPlay(0);
         }
+        if (col.gameObject.tag == "GameZone_BGM")
+        {
+            BgmPlay(1);
+        }
+        /*if (col.gameObject.tag == "Puzzle_BGM")
+        {
+            BgmPlay(2);
+        }
+        if (col.gameObject.tag == "SpeedRun_BGM")
+        {
+            BgmPlay(3);
+        }
+        if (col.gameObject.tag == "Defense_BGM")
+        {
+            BgmPlay(4);
+        }*/
     }
 
     public void Die()
@@ -220,22 +243,22 @@ public class PlayerControl : MonoBehaviour
     #region "AudioManage -----------"
     void BgmPlay(int kind)
     {
-        audios[0].SendMessage("AudioPlay", kind);
+        audioList[0].SendMessage("BGMPlay", kind);
     }
 
     void SfxPlay(int kind)
     {
-        audios[1].SendMessage("AudioPlay", kind);
+        audioList[1].SendMessage("AudioPlay", kind);
     }
 
-    void SfxLoopPlay(int kind)
+    void FootStepPlay(int kind)
     {
-        audios[2].SendMessage("AudioPlay", kind);
+        audioList[2].SendMessage("AudioPlay", kind);
     }
 
-    void SfxLoopStop(int kind)
+    void FootStepStop(int kind)
     {
-        audios[2].SendMessage("AudioStop", kind);
+        audioList[2].SendMessage("AudioStop", kind);
     }
     #endregion
 }

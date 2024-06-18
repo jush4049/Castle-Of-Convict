@@ -13,7 +13,9 @@ TagManager:
   - Base
   - Guard
   - Slash
-  - Main
+  - MainHall_BGM
+  - GameZone_BGM
+  - MiniGame
   layers:
   - Default
   - TransparentFX

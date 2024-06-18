@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Tile : MonoBehaviour
+public class Tile : MonoBehaviour, IPointerDownHandler
 {
     float speed = 30;      // 타일 이동속도
     bool canMove = false;  // 이동 가능 여부
     Vector3 target;        // 목적지
+
+    AudioSource audioSource; // 퍼즐 이동 사운드
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -41,4 +50,8 @@ public class Tile : MonoBehaviour
         GameObject.Find("PuzzleManager").SendMessage("SetTouch", n);
     }
 
+    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+    {
+        audioSource.Play();
+    }
 }
