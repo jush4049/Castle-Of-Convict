@@ -6,6 +6,8 @@ public class Coin : MonoBehaviour
 {
     float rotateSpeed = 150;
 
+    public AudioSource audioSource;
+
     void Update()
     {
         transform.Rotate(Vector3.right * Time.deltaTime * rotateSpeed);
@@ -15,6 +17,7 @@ public class Coin : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
+            audioSource.Play();
             SpeedRunManager.coinCount++;
             GaugeBar.time += 3;
             gameObject.SetActive(false);

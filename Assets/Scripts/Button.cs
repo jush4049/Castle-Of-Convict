@@ -6,10 +6,15 @@ using UnityEngine.EventSystems;
 
 public class Button : MonoBehaviour, IPointerDownHandler
 {
-    public Transform sfx;
+    AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
-        sfx.SendMessage("AudioPlay", 4);
+        audioSource.Play();
     }
 }

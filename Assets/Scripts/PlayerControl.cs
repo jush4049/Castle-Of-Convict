@@ -198,12 +198,6 @@ public class PlayerControl : MonoBehaviour
             transform.position = defenseRespawnPoint.transform.position;
         }
 
-        // 오브젝트 획득
-        if (col.gameObject.tag == "Coin")
-        {
-            SfxPlay(0);
-        }
-
         // 배경음악 변경
         if (col.gameObject.tag == "MainHall_BGM")
         {
