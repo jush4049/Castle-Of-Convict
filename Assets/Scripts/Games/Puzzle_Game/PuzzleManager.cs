@@ -189,7 +189,7 @@ public class PuzzleManager : MonoBehaviour
     void ShuffleTile()
     {
         // 테스트
-        //return;
+        // return;
         for (int i = 0; i < orders.Count - 1; i++)
         {
             int n = Random.Range(i + 1, orders.Count); // 현재 번호보다 큰 난수 생성
