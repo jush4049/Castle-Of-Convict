@@ -33,6 +33,8 @@ public class PlayerControl : MonoBehaviour
     GameObject guardEffect;
     GameObject slashEffect;
 
+    public GameObject mapText;
+
     public Transform[] audioList;
     int playerMapPosition;
 
@@ -202,10 +204,18 @@ public class PlayerControl : MonoBehaviour
         if (col.gameObject.tag == "MainHall_BGM")
         {
             BgmPlay(0);
+            if (!Dialogue.instance.dialogueRunning)
+            {
+                mapText.SendMessage("MapOn", 1);
+            }
         }
         if (col.gameObject.tag == "GameZone_BGM")
         {
             BgmPlay(1);
+            if (!Dialogue.instance.dialogueRunning)
+            {
+                mapText.SendMessage("MapOn", 2);
+            }
         }
         /*if (col.gameObject.tag == "Puzzle_BGM")
         {
