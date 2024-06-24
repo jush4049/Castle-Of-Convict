@@ -61,7 +61,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             Vector2 mousePos = Input.mousePosition;
             float w = itemInfo.rect.width;
             float h = itemInfo.rect.height;
-            itemInfo.position = mousePos + (new Vector2(150, -200));
+            itemInfo.position = mousePos + (new Vector2(250, -300));
             itemNameText.text = item.itemName;
             itemInfoText.text = item.itemDescription;
         }

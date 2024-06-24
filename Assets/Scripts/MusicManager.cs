@@ -27,13 +27,19 @@ public class MusicManager : MonoBehaviour
             sfxSlider.value = 0.5f;
         }
     }
-    
+
+    public void VolumeValueGet()
+    {
+        bgmSlider.value = PlayerPrefs.GetFloat("BGM_Volume");
+        sfxSlider.value = PlayerPrefs.GetFloat("SFX_Volume");
+    }
+
     void Start()
     {
         bgmSlider.onValueChanged.AddListener(OnValueChanged);
         sfxSlider.onValueChanged.AddListener(OnValueChanged);
-        audioMixer.SetFloat("BGM_Volume", Mathf.Log10(bgmSlider.value) * 20);
-        audioMixer.SetFloat("SFX_Volume", Mathf.Log10(sfxSlider.value) * 20);
+        //audioMixer.SetFloat("BGM_Volume", Mathf.Log10(bgmSlider.value) * 20);
+        //audioMixer.SetFloat("SFX_Volume", Mathf.Log10(sfxSlider.value) * 20);
     }
 
     public void OnValueChanged(float music_value)
